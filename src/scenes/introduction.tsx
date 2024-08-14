@@ -19,8 +19,6 @@ import { digitalRoot } from "../lib";
 import { Cross, DigitalRootDemo } from "../components";
 
 export default makeScene2D(function* (view) {
-  view.fill("#1c1c1c");
-
   const title = createRef<Txt>();
 
   view.add(<Txt ref={title} fontSize={100} fill="white" text="" />);
@@ -41,12 +39,15 @@ export default makeScene2D(function* (view) {
     </Node>,
   );
 
-  yield* rootExamples().code.append("function digitalRoot(n: number): number", 1);
+  yield* rootExamples().code.append(
+    "function digitalRoot(n: number): number",
+    1,
+  );
   yield* beginSlide("function-def");
 
   yield* rootExamples().code.append("\n\n// examples:\n", 1);
 
-  const rootArguments = [3, 14, 123].map((x) => createSignal(x));
+  const rootArguments = [4, 14, 123].map((x) => createSignal(x));
 
   for (const rootArg of rootArguments) {
     const rootArgCode = Code.createSignal(() =>
@@ -132,7 +133,7 @@ export default makeScene2D(function* (view) {
       extends={[600, 400]}
       start={0}
       end={0}
-      curve={{ stroke: "white", lineWidth: 6 }}
+      curve={{ stroke: "white", lineWidth: 12 }}
     />,
   );
 
