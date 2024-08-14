@@ -91,7 +91,7 @@ export class DigitalRootDemo extends Node {
 
   private *updateTex({
     digitSeparator = "",
-    duration,
+    duration = 0,
   }: {
     digitSeparator?: string;
     duration?: number;
