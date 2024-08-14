@@ -52,7 +52,7 @@ export default makeScene2D(function* (view) {
     </Node>,
   );
 
-  yield* slideTransition(Direction.Top, 1);
+  yield* slideTransition(Direction.Bottom, 2);
   yield* waitFor(0.5);
 
   yield* all(
