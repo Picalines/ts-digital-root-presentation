@@ -223,6 +223,8 @@ export default makeScene2D(function* (view) {
     modProperty().y(view.height() + 200, 1),
   );
 
+  modProperty().opacity(0);
+
   yield* waitFor(0.5);
 
   yield* chain(
