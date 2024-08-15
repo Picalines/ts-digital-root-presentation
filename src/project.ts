@@ -5,6 +5,7 @@ import { parser as jsParser } from "@lezer/javascript";
 import introduction from "./scenes/introduction?scene";
 import tsMath from "./scenes/ts-math?scene";
 import addingDigits from "./scenes/adding-digits?scene";
+import digitalRootProperties from "./scenes/digital-root-properties?scene";
 
 Code.defaultHighlighter = new LezerHighlighter(
   jsParser.configure({
@@ -13,5 +14,5 @@ Code.defaultHighlighter = new LezerHighlighter(
 );
 
 export default makeProject({
-  scenes: [introduction, tsMath, addingDigits],
+  scenes: [introduction, tsMath, addingDigits, digitalRootProperties],
 });
