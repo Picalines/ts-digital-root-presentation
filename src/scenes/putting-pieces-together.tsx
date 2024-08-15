@@ -1,6 +1,7 @@
 import { Code, makeScene2D, Txt } from "@motion-canvas/2d";
 import {
   beginSlide,
+  chain,
   createRef,
   Direction,
   slideTransition,
@@ -15,10 +16,11 @@ export default makeScene2D(function* (view) {
     </Txt>,
   );
 
-  yield* slideTransition(Direction.Bottom, 2);
-  yield* beginSlide("chapter-title");
-
-  yield* title().opacity(0, 0.5);
+  yield* chain(
+    slideTransition(Direction.Bottom, 2),
+    beginSlide("chapter-title"),
+    title().opacity(0, 0.5),
+  );
 
   const code = createRef<Code>();
 
@@ -36,7 +38,5 @@ type Solution<T extends number> =
     />,
   );
 
-  yield* code().opacity(1, 0.5);
-
-  yield* beginSlide("final-code");
+  yield* chain(code().opacity(1, 0.5), beginSlide("final-code"));
 });

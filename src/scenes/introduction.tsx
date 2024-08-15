@@ -14,6 +14,7 @@ import {
   waitFor,
   createSignal,
   all,
+  chain,
 } from "@motion-canvas/core";
 import { digitalRoot } from "../lib";
 import { Cross, DigitalRootDemo } from "../components";
@@ -23,12 +24,13 @@ export default makeScene2D(function* (view) {
 
   view.add(<Txt ref={title} fontSize={100} fill="white" text="" />);
 
-  yield* title().text("Цифровой корень на TypeScript", 1);
-  yield* beginSlide("presentation-title");
-
-  yield* title().text("Введение", 1);
-  yield* beginSlide("chapter-title");
-  yield* title().opacity(0, 0.5);
+  yield* chain(
+    title().text("Цифровой корень на TypeScript", 1),
+    beginSlide("presentation-title"),
+    title().text("Введение", 1),
+    beginSlide("chapter-title"),
+    title().opacity(0, 0.5),
+  );
 
   const backgroundGroup = createRef<Node>();
   const rootExamples = createRef<Code>();

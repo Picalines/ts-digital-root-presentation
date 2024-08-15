@@ -8,7 +8,6 @@ import {
   Direction,
   sequence,
   slideTransition,
-  waitFor,
 } from "@motion-canvas/core";
 import { Cross } from "../components";
 
@@ -51,7 +50,7 @@ export default makeScene2D(function* (view) {
       CODE`type ${rootImplTypeName}<${rootImplTypeParams}> = ${rootImplTypeBody}`,
       1,
     ),
-    waitFor(1),
+    beginSlide("naive-digital-root-signature"),
     rootImplTypeBody(CODE`\n  ${rootImplTypeName}</* Digit[] */>`, 1),
   );
 
@@ -63,6 +62,8 @@ export default makeScene2D(function* (view) {
   errorCross().extends(recErrorBox.size.mul(0.6));
 
   yield* sequence(0.25, errorCross().end(1, 1), errorCross().start(1, 1));
+
+  yield* beginSlide("recursion-error-with-number");
 
   yield* chain(
     all(
@@ -111,6 +112,8 @@ type Screen = {
 }`,
     1,
   );
+
+  yield* beginSlide("ts-types-are-nested");
 
   yield* chain(
     ...tcode()
@@ -173,13 +176,11 @@ type Example = InnerPart<{
   );
   yield* beginSlide("highlight-true-branch");
 
-  yield* chain(
-    tcode().selection(tcode().findFirstRange(/: never/g), 0.5),
-    tcode().selection(DEFAULT, 0.5),
-  );
+  yield* tcode().selection(tcode().findFirstRange(/: never/g), 0.5);
   yield* beginSlide("highlight-true-branch");
 
   yield* chain(
+    tcode().selection(DEFAULT, 0.5),
     tcode().code("", 0.5),
     tcode().code(
       `\
@@ -219,6 +220,7 @@ type ShinyButtonProps =
 Operation[] operations = [/* ... */]`,
       1,
     ),
+    beginSlide("csharp-example-value-to-match"),
     tcode().fontSize(35, 1),
     tcode().code.append(
       `\
@@ -234,6 +236,7 @@ if (operations.Length == 1 && operations[0] is DeleteOperation) {
 `,
       1,
     ),
+    beginSlide("csharp-example-imperative"),
     tcode().code.append(
       `\
 
@@ -244,9 +247,8 @@ if (operations is [DeleteOperation { ItemCount: > 0 }]) {
 `,
       1,
     ),
+    beginSlide("csharp-example-declarative"),
   );
-
-  yield* beginSlide("pattern-matching-example");
 
   yield* all(
     tcode().opacity(0, 1),
@@ -261,15 +263,16 @@ if (operations is [DeleteOperation { ItemCount: > 0 }]) {
     ? ${replace("DS[0]", "D1")}
     : ...`,
 
+    beginSlide("base-case-with-infer"),
+
     rootImplTypeBody.edit(1)`\
 
   DS extends [infer D1 extends Digit]
     ? D1
     : ${replace("...", "DS extends [")}`,
-  );
 
-  yield* rootImplTypeBody.append(
-    `\
+    rootImplTypeBody.append(
+      `\
 
         infer D1 extends Digit,
         infer D2 extends Digit,
@@ -277,44 +280,50 @@ if (operations is [DeleteOperation { ItemCount: > 0 }]) {
     ]
       ? ...
       : never`,
-    1,
+      1,
+    ),
+    beginSlide("recursive-case-with-infer"),
   );
 
-  yield* code().fontSize(40, 0.5);
-
-  yield* code().code.replace(
-    code().findLastRange(/\.\.\./g),
-    CODE`${rootImplTypeName}<[
+  yield* chain(
+    code().fontSize(40, 0.5),
+    code().code.replace(
+      code().findLastRange(/\.\.\./g),
+      CODE`${rootImplTypeName}<[
           SmallDigitalRoot<AddDigits<D1, D2>>,
           ...Rest
         ]>`,
-    1,
+      1,
+    ),
+    beginSlide("infer-base-case"),
   );
 
-  yield* beginSlide("infer-base-case");
-
-  yield* code().selection(code().findAllRanges(/infer D\d extends Digit,/g), 1);
-  yield* beginSlide("highlight-first-two-digits");
-
-  yield* code().selection(
-    code().findFirstRange(/\.\.\.infer .*? Digit\[\]/g),
-    1,
+  yield* chain(
+    code().selection(code().findAllRanges(/infer D\d extends Digit,/g), 1),
+    beginSlide("highlight-first-two-digits"),
   );
-  yield* beginSlide("highlight-rest-digits");
 
-  yield* code().selection(DEFAULT, 0.5);
-  yield* beginSlide("digital-root-impl-done");
+  yield* chain(
+    code().selection(code().findFirstRange(/\.\.\.infer .*? Digit\[\]/g), 1),
+    beginSlide("highlight-rest-digits"),
+  );
 
-  yield* code().code(
-    `\
+  yield* chain(
+    code().selection(DEFAULT, 0.5),
+    beginSlide("digital-root-impl-done"),
+  );
+
+  yield* chain(
+    code().code(
+      `\
 type Digits<N extends number> =
   N extends Digit
     ? [N]
     : ...`,
-    1,
+      1,
+    ),
+    beginSlide("reading-digits-base-case"),
   );
-
-  yield* beginSlide("reading-digits-base-case");
 
   yield* code().code.replace(
     code().findLastRange(/\.\.\./g),
@@ -325,9 +334,11 @@ type Digits<N extends number> =
     1,
   );
 
+  yield* beginSlide("recursive-digit-reading");
+
   yield* code().selection(code().findFirstRange(/`\$\{.*`/g), 1);
 
-  yield* beginSlide("highlight-template-infer");
+  yield* beginSlide("highlight-string-infer");
 
   yield* all(
     code().selection(DEFAULT, 1),

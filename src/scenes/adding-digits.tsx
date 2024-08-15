@@ -2,6 +2,7 @@ import { Code, makeScene2D, Txt, CODE } from "@motion-canvas/2d";
 import {
   all,
   beginSlide,
+  chain,
   createRef,
   createSignal,
   Direction,
@@ -22,10 +23,11 @@ export default makeScene2D(function* (view) {
     </Txt>,
   );
 
-  yield* slideTransition(Direction.Bottom, 2);
-  yield* beginSlide("chapter-title");
-
-  yield* title().opacity(0, 0.5);
+  yield* chain(
+    slideTransition(Direction.Bottom, 2),
+    beginSlide("chapter-title"),
+    title().opacity(0, 0.5),
+  );
 
   const code = createRef<Code>();
 

@@ -35,10 +35,11 @@ export default makeScene2D(function* (view) {
     </Txt>,
   );
 
-  yield* slideTransition(Direction.Bottom, 2);
-  yield* beginSlide("chapter-title");
-
-  yield* title().opacity(0, 0.5);
+  yield* chain(
+    slideTransition(Direction.Bottom, 2),
+    beginSlide("chapter-title"),
+    title().opacity(0, 0.5),
+  );
 
   const tex = createRef<Latex>();
 
@@ -324,6 +325,7 @@ type ${smallRootTableType} = [${smallRootTableBody}
   );
 
   yield* code().opacity(1, 0.5);
+  yield* beginSlide("small-digital-root-table");
 
   const smallRootTableCells = range(19).map(() => {
     const value = createSignal(0);
