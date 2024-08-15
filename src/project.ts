@@ -7,6 +7,7 @@ import tsMath from "./scenes/ts-math?scene";
 import addingDigits from "./scenes/adding-digits?scene";
 import digitalRootProperties from "./scenes/digital-root-properties?scene";
 import tsInfer from "./scenes/ts-infer?scene";
+import puttingPiecesTogether from "./scenes/putting-pieces-together?scene";
 
 Code.defaultHighlighter = new LezerHighlighter(
   jsParser.configure({
@@ -15,5 +16,12 @@ Code.defaultHighlighter = new LezerHighlighter(
 );
 
 export default makeProject({
-  scenes: [introduction, tsMath, addingDigits, digitalRootProperties, tsInfer],
+  scenes: [
+    introduction,
+    tsMath,
+    addingDigits,
+    digitalRootProperties,
+    tsInfer,
+    puttingPiecesTogether,
+  ],
 });
