@@ -11,6 +11,7 @@ import {
   slideTransition,
   waitFor,
 } from "@motion-canvas/core";
+import { joinIter } from "../lib";
 
 export default makeScene2D(function* (view) {
   const title = createRef<Txt>();
@@ -89,8 +90,8 @@ type AddTable = [${addTableBody}
       const digitSum = createSignal(0);
 
       const code = Code.createSignal(() => {
-        const s = Math.floor(digitSum()).toString();
-        return x > 0 ? s.padStart(3, " ") : s;
+        const literal = Math.floor(digitSum()).toString();
+        return x > 0 ? literal.padStart(3, " ") : literal;
       });
 
       return { digitSum, code };
@@ -128,21 +129,3 @@ type AddTable = [${addTableBody}
 
   yield* beginSlide("add-table");
 });
-
-function* joinIter<T, S>(array: readonly T[], separator: S) {
-  if (array.length == 0) {
-    return;
-  }
-
-  if (array.length == 1) {
-    yield array[0];
-    return;
-  }
-
-  for (let i = 0; i < array.length - 1; i++) {
-    yield array[i];
-    yield separator;
-  }
-
-  yield array[array.length - 1];
-}
